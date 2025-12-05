@@ -1,0 +1,31 @@
+name: Docker Image Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check-images:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Check Docker Compose file
+        run: |
+          docker-compose config
+
+      - name: Check Prometheus config
+        run: |
+          docker run --rm -v $(pwd)/prometheus:/config prom/prometheus:latest \
+            promtool check config /config/prometheus.yml
+
+      - name: Test Node Exporter script
+        run: |
+          bash -n node-exporter/install.sh
+
+      - name: Validate YAML files
+        run: |
+          yamllint -d relaxed docker-compose.yml prometheus/*.yml

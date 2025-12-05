@@ -1,93 +1,78 @@
-# 🚀 Monitoring Stack: Prometheus + Grafana + Node Exporter
+# Monitoring Stack - Docker/Prometheus/Grafana
 
-## 📊 Project Overview
-A complete monitoring solution deployed across multiple Linux virtual machines, collecting real-time system metrics and visualizing them through interactive dashboards.
+## DESCRIPTION
 
-## 🏗️ System Architecture
-Windows Host (Main OS)
-├── Ubuntu Server VM (192.168.1.100) - Monitoring Server
-│ ├── Prometheus (port 9090) - Metrics storage and collection
-│ ├── Grafana (port 3000) - Dashboards and visualization
-│ └── Node Exporter (port 9100) - Self-monitoring metrics
-└── Kali Linux VM (192.168.1.101) - Monitored Host
-└── Node Exporter (port 9100) - Host metrics collectio
+Complete monitoring solution for Docker environments using Prometheus,
+Grafana, and Node Exporter. Ready for production deployment.
 
-## 🛠️ Technologies Stack
-| Component | Purpose | Port |
-|-----------|---------|------|
-| **Prometheus** | Time-series database for metrics | 9090 |
-| **Grafana** | Visualization and dashboards | 3000 |
-| **Node Exporter** | System metrics collection | 9100 |
-| **Docker** | Containerization platform | - |
-| **Ubuntu Server** | Monitoring server OS | - |
-| **Kali Linux** | Monitored client OS | - |
+Components:
 
-## 🚀 Quick Start
-# Clone the repository
-git clone https://github.com/txsmast/monitoring-stack.git
+- **prometheus** - Metrics collection and alerting
+- **grafana** - Visualization and dashboards
+- **node-exporter** - Host-level metrics collection
+
+## QUICK START
+
+```bash
+# Clone and run
+git clone https://github.com/Masthell/monitoring-stack.git
 cd monitoring-stack
-
-# Deploy the monitoring stack
 docker-compose up -d
 
-# Verify deployment
-docker-compose ps
-📁 Project Structure
-.
-├── docker-compose.yml          # Docker Compose configuration
-├── prometheus.yml              # Prometheus configuration
-├── README.md                   # Project documentation
-├── docs/                       # Documentation
-│   ├── screenshots/           # System screenshots
-│   └── setup_guide.md         # Detailed setup instructions
-└── scripts/                    # Utility scripts
-    └── deploy.sh              # Automated deployment script
-Key Features
+# Verify
+curl http://localhost:9090/-/healthy      # Prometheus
+curl http://localhost:3000                # Grafana (admin/admin)
+curl http://localhost:9100/metrics        # Node Exporter
+INSTALLATION
+Requirements
+Docker 20.10+ and Docker Compose 2.0+
+
+Ports 9090, 3000, 9100 available
+
+Full Installation
+bash
+./scripts/deploy.sh
+Manual Installation
+Clone repository
+Copy docker-compose.yml and configuration files
+Run docker-compose up -d
+Access services (see URLs below)
+
+CONFIGURATION
+File Structure
+text
+monitoring-stack/
+├── docker-compose.yml           # Main configuration
+├── prometheus/
+│   ├── prometheus.yml          # Prometheus config
+│   └── alerts.yml              # Alert rules
+├── grafana/provisioning/       # Grafana auto-config
+├── node-exporter/install.sh    # Remote host installer
+└── scripts/deploy.sh           # Deployment script
+
+URLs
+Prometheus: http://localhost:9090
+Grafana: http://localhost:3000 (admin/admin)
+Node Exporter: http://localhost:9100
+
+Adding New Hosts
+bash
+# On remote host
+sudo ./node-exporter/install.sh
+# In prometheus/prometheus.yml, add:
+# - job_name: 'new-host'
+#   static_configs:
+#     - targets: ['host-ip:9100']
 
 
-📈 Collected Metrics
-Metric	Description	Example Query
-CPU Usage	Processor utilization per core	rate(node_cpu_seconds_total[1m])
-Memory Usage	RAM consumption	node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes
-Disk Space	Filesystem usage	node_filesystem_avail_bytes
-Network Traffic	Network interface statistics	rate(node_network_receive_bytes_total[5m])
-System Uptime	Host uptime	node_time_seconds - node_boot_time_seconds
-Running Processes	Number of processes	node_procs_running
-🎓 Skills Demonstrated
-Linux Administration
-System service management (systemd, journalctl)
-Network configuration (netplan, static IP assignment)
-User and permission management
-Networking
-Port configuration and firewall management
-Inter-VM communication setup
-DNS and gateway configuration
+prom/prometheus:latest
+grafana/grafana:latest
+prom/node-exporter:latest
 
-Docker & Containerization
-Docker Compose deployment
+VERSION HISTORY
+v1.0.0 (2025) - Initial release with basic monitoring stack
 
-Container lifecycle management
-
-Volume and network configuration
-
-Monitoring & Observability
-Prometheus configuration and query language
-
-Grafana dashboard creation
-
-Metrics collection and visualization
-
-Troubleshooting
-Log analysis with journalctl and docker logs
-
-Network debugging (ping, curl, ss)
-
-Service health monitoring
-
-🔗 Access URLs
-Service	URL	Credentials
-Prometheus	http://192.168.1.100:9090	None
-Grafana	http://192.168.1.100:3000	admin / admin123
-Node Exporter (Ubuntu)	http://192.168.1.100:9100/metrics	None
-Node Exporter (Kali)	http://192.168.1.101:9100/metrics	None
-
+CONTACT
+GitHub: https://github.com/Masthell
+Project: https://github.com/Masthell/monitoring-stack
+```

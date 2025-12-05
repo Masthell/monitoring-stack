@@ -1,0 +1,16 @@
+# Docker
+**/.env
+**/.DS_Store
+
+# Data directories
+prometheus/data/
+grafana/data/
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
