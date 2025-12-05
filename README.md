@@ -34,7 +34,6 @@ Docker 20.10+ and Docker Compose 2.0+
 Ports 9090, 3000, 9100 available
 
 Full Installation
-bash
 ./scripts/deploy.sh
 Manual Installation
 Clone repository
@@ -44,7 +43,6 @@ Access services (see URLs below)
 
 CONFIGURATION
 File Structure
-text
 monitoring-stack/
 ├── docker-compose.yml           # Main configuration
 ├── prometheus/
@@ -60,7 +58,6 @@ Grafana: http://localhost:3000 (admin/admin)
 Node Exporter: http://localhost:9100
 
 Adding New Hosts
-bash
 # On remote host
 sudo ./node-exporter/install.sh
 # In prometheus/prometheus.yml, add:
