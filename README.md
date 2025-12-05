@@ -11,6 +11,10 @@ Components:
 - **grafana** - Visualization and dashboards
 - **node-exporter** - Host-level metrics collection
 
+example
+![Image1](https://github.com/Masthell/monitoring-stack/blob/main/docs/screenshots/2025-12-05%20144431.png)
+there's also a folder of screenshots from my work
+
 ## QUICK START
 
 ```bash
